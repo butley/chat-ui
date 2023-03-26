@@ -1,3 +1,5 @@
+import {UserEntity} from "@/types/custom";
+
 export interface OpenAIModel {
   id: string;
   name: string;
@@ -34,19 +36,20 @@ export interface ChatFolder {
 }
 
 export interface Conversation {
-  id: number;
+  id?: number;
   name: string;
   messages: Message[];
   model: OpenAIModel;
-  prompt: string;
-  folderId: number;
+  prompt?: string;
+  folderId?: number;
+  user?: UserEntity;
 }
 
 export interface ChatBody {
   model: OpenAIModel;
   messages: Message[];
   key: string;
-  prompt: string;
+  prompt?: string;
 }
 
 export interface KeyValuePair {

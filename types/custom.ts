@@ -7,7 +7,7 @@ export interface UserEntity {
   firstName?: string;
   lastName?: string;
   provider?: 'GOOGLE' | 'MICROSOFT' | 'NONE';
-  status: 'PENDING' | 'ACTIVE' | 'SUSPENDED' | 'INACTIVE';
+  status?: 'PENDING' | 'ACTIVE' | 'SUSPENDED' | 'INACTIVE';
 }
 
 export interface ChatMessageEntity {
@@ -22,7 +22,6 @@ export interface ChatMessageEntity {
   agentContent: string;
   agentDateTime?: string;
 }
-
 
 function convertChatMessagesToMessages(entities: ChatMessageEntity[]): Message[] {
   return entities.flatMap((entity) => {
