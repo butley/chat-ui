@@ -64,31 +64,29 @@ export const chatClient: HTTP = {
 }
 
 // Create a new conversation
-export const createConversation = (conversation: Conversation) =>
+export const createConversation = async (conversation: Conversation) =>
     chatClient.post<Conversation>(
         {
-          url: `/conversation`
+          url: `/chat/conversation`
         },
         conversation
     );
 
-// Get conversations by userId
-export const getConversations = (userId: string) =>
+export const getConversations = async (userId: string) =>
     chatClient.get<Conversation[]>(
         {
-          url: `/conversation/${userId}`
+          url: `/chat/conversation/${userId}`
         }
     );
 
-export const deleteConversation = (conversationId: string) =>
+export const deleteConversation = async (conversationId: string) =>
     chatClient.delete(
         {
-          url: `/conversation/${conversationId}`
+          url: `/chat/conversation/${conversationId}`
         }
     );
 
-
-export const createMessage = (chatMessageEntity: ChatMessageEntity) =>
+export const createMessage = async (chatMessageEntity: ChatMessageEntity) =>
     chatClient.post(
         {
           url: `/chat`
@@ -96,8 +94,7 @@ export const createMessage = (chatMessageEntity: ChatMessageEntity) =>
         chatMessageEntity
     );
 
-// Get messages by conversationId and userId
-export const getMessagesByConversationId = (conversationId: string, userId: string) =>
+export const getMessagesByConversationId = async (conversationId: string, userId: string) =>
     chatClient.get<ChatMessageEntity[]>(
         {
           url: `/chat/messages/conversation/${conversationId}/${userId}`
