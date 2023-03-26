@@ -1,6 +1,6 @@
 import { Chat } from '@/components/Chat/Chat';
 import { Navbar } from '@/components/Mobile/Navbar';
-import { Sidebar } from '@/components/Sidebar/Sidebar';
+import { CustomSidebar } from '@/components/Sidebar/CustomSidebar';
 import {
   ChatBody,
   ChatFolder,
@@ -30,6 +30,8 @@ import Head from 'next/head';
 import { useEffect, useRef, useState } from 'react';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import { createConversation } from '@/components/api';
+import { AxiosResponse } from 'axios';
 
 interface HomeProps {
   serverSideApiKeyIsSet: boolean;
@@ -327,29 +329,40 @@ const Home: React.FC<HomeProps> = ({ serverSideApiKeyIsSet }) => {
     saveFolders(updatedFolders);
   };
 
-  const handleNewConversation = () => {
-    const lastConversation = conversations[conversations.length - 1];
-
-    const newConversation: Conversation = {
-      id: lastConversation ? lastConversation.id + 1 : 1,
-      name: `${t('Conversation')} ${
-        lastConversation ? lastConversation.id + 1 : 1
-      }`,
+  const handleNewConversation = async () => {
+    let newConversation: Conversation = {
+      name: `${t('New Conversation')}`,
       messages: [],
       model: OpenAIModels[OpenAIModelID.GPT_3_5],
-      prompt: DEFAULT_SYSTEM_PROMPT,
+      //prompt: DEFAULT_SYSTEM_PROMPT,
       folderId: 0,
+      // user: {
+      //   id: 2,
+      // }
     };
 
-    const updatedConversations = [...conversations, newConversation];
+    setLoading(true);
 
-    setSelectedConversation(newConversation);
-    setConversations(updatedConversations);
+    await createConversation(newConversation)
+      .then((r) => {
+        let response = r as AxiosResponse;
+        if (response.status == 200) {
+          const updatedConversations = [...conversations, newConversation];
 
-    saveConversation(newConversation);
-    saveConversations(updatedConversations);
+          setSelectedConversation(newConversation);
+          setConversations(updatedConversations);
+          setLoading(false);
 
-    setLoading(false);
+          //saveConversation(newConversation);
+          //saveConversations(updatedConversations);
+        }
+      })
+      .catch((error) => {
+        console.log('error:', error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const handleDeleteConversation = (conversation: Conversation) => {
@@ -534,7 +547,7 @@ const Home: React.FC<HomeProps> = ({ serverSideApiKeyIsSet }) => {
           <div className="flex h-full w-full pt-[48px] sm:pt-0">
             {showSidebar ? (
               <div>
-                <Sidebar
+                <CustomSidebar
                   loading={messageIsStreaming}
                   conversations={conversations}
                   lightMode={lightMode}
