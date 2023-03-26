@@ -183,7 +183,7 @@ export const Sidebar: FC<Props> = ({
               conversations={filteredConversations.filter(
                 (conversation) =>
                   conversation.folderId === 0 ||
-                  !folders[conversation.folderId - 1],
+                  !folders[conversation.folderId!! - 1],
               )}
               selectedConversation={selectedConversation}
               onSelectConversation={onSelectConversation}
