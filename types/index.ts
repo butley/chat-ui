@@ -4,29 +4,27 @@ export interface OpenAIModel {
 }
 
 export enum OpenAIModelID {
-  GPT_3_5 = "gpt-3.5-turbo",
-  GPT_4 = "gpt-4"
+  GPT_3_5 = 'gpt-3.5-turbo',
+  GPT_4 = 'gpt-4',
 }
 
 export const OpenAIModels: Record<OpenAIModelID, OpenAIModel> = {
   [OpenAIModelID.GPT_3_5]: {
     id: OpenAIModelID.GPT_3_5,
-    name: "Default (GPT-3.5)"
+    name: 'Default (GPT-3.5)',
   },
   [OpenAIModelID.GPT_4]: {
     id: OpenAIModelID.GPT_4,
-    name: "GPT-4"
-  }
+    name: 'GPT-4',
+  },
 };
 
 export interface Message {
   role: Role;
   content: string;
-  chatTransactionID?: number;
-  timestamps?: string;
 }
 
-export type Role = "assistant" | "user";
+export type Role = 'assistant' | 'user';
 
 export interface ChatFolder {
   id: number;
@@ -59,13 +57,13 @@ export interface LocalStorage {
   apiKey: string;
   conversationHistory: Conversation[];
   selectedConversation: Conversation;
-  theme: "light" | "dark";
+  theme: 'light' | 'dark';
   // added folders (3/23/23)
   folders: ChatFolder[];
 }
 
 export interface ErrorMessage {
-  code: String | null,
-  title: String,
-  messageLines: String[]
+  code: String | null;
+  title: String;
+  messageLines: String[];
 }
