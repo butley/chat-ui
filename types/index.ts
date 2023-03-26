@@ -22,6 +22,8 @@ export const OpenAIModels: Record<OpenAIModelID, OpenAIModel> = {
 export interface Message {
   role: Role;
   content: string;
+  chatTransactionID?: number;
+  timestamps?: string;
 }
 
 export type Role = 'assistant' | 'user';
