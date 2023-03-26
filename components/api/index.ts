@@ -1,29 +1,36 @@
-import axios, {AxiosRequestConfig, AxiosResponse} from 'axios'
-import {env} from '@/components/Providers/Environment'
-import axiosRetry from 'axios-retry'
-import {ChatMessageEntity} from "@/types/custom";
-import {Conversation} from "@/types";
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { env } from '@/components/Providers/Environment';
+import axiosRetry from 'axios-retry';
+import { ChatMessageEntity } from '@/types/custom';
+import { Conversation } from '@/types';
 
 export type ChatHttpConfig = {
-  url: string
-  method?: string
-} & AxiosRequestConfig
-
+  url: string;
+  method?: string;
+} & AxiosRequestConfig;
 
 type HTTP = {
-  get<T = unknown, R = AxiosResponse<T>>(config: ChatHttpConfig): Promise<R>
-  post<T = unknown, R = AxiosResponse<T>>(config: ChatHttpConfig, data?: unknown): Promise<R>
-  put<T = unknown, R = AxiosResponse<T>>(config: ChatHttpConfig, data?: unknown): Promise<R>
-  delete<T = unknown, R = AxiosResponse<T>>(config: ChatHttpConfig, data?: unknown): Promise<R>
-}
-
+  get<T = unknown, R = AxiosResponse<T>>(config: ChatHttpConfig): Promise<R>;
+  post<T = unknown, R = AxiosResponse<T>>(
+    config: ChatHttpConfig,
+    data?: unknown,
+  ): Promise<R>;
+  put<T = unknown, R = AxiosResponse<T>>(
+    config: ChatHttpConfig,
+    data?: unknown,
+  ): Promise<R>;
+  delete<T = unknown, R = AxiosResponse<T>>(
+    config: ChatHttpConfig,
+    data?: unknown,
+  ): Promise<R>;
+};
 
 export const requestInterceptor = (value: AxiosRequestConfig) => {
   //const requestHash = value.headers && (value.headers['Authentication-Hash'] as string)
-  return value
-}
-axios.interceptors.request.use(requestInterceptor)
-axiosRetry(axios, {retries: 0})
+  return value;
+};
+axios.interceptors.request.use(requestInterceptor);
+axiosRetry(axios, { retries: 0 });
 
 export const chatClient: HTTP = {
   get: (config) => {
@@ -31,8 +38,8 @@ export const chatClient: HTTP = {
       method: 'get',
       responseType: 'json',
       baseURL: env('butleyApiHost'),
-      ...config
-    })
+      ...config,
+    });
   },
   post: (config, payload) => {
     return axios.request({
@@ -40,8 +47,8 @@ export const chatClient: HTTP = {
       responseType: 'json',
       baseURL: env('butleyApiHost'),
       data: payload,
-      ...config
-    })
+      ...config,
+    });
   },
   put: (config, payload) => {
     return axios.request({
@@ -49,8 +56,8 @@ export const chatClient: HTTP = {
       responseType: 'json',
       baseURL: env('butleyApiHost'),
       data: payload,
-      ...config
-    })
+      ...config,
+    });
   },
   delete: (config, payload) => {
     return axios.request({
@@ -58,53 +65,47 @@ export const chatClient: HTTP = {
       responseType: 'json',
       baseURL: env('butleyApiHost'),
       data: payload,
-      ...config
-    })
-  }
-}
+      ...config,
+    });
+  },
+};
 
 // Create a new conversation
 export const createConversation = async (conversation: Conversation) =>
-    chatClient.post<Conversation>(
-        {
-          url: `/chat/conversation`
-        },
-        conversation
-    );
+  chatClient.post<Conversation>(
+    {
+      url: `/chat/conversation`,
+    },
+    conversation,
+  );
 
 export const getConversations = async (userId: string) =>
-    chatClient.get<Conversation[]>(
-        {
-          url: `/chat/conversation/${userId}`
-        }
-    );
+  chatClient.get<Conversation[]>({
+    url: `/chat/conversation/${userId}`,
+  });
 
 export const deleteConversation = async (conversationId: string) =>
-    chatClient.delete(
-        {
-          url: `/chat/conversation/${conversationId}`
-        }
-    );
+  chatClient.delete({
+    url: `/chat/conversation/${conversationId}`,
+  });
 
 export const createMessage = async (chatMessageEntity: ChatMessageEntity) =>
-    chatClient.post(
-        {
-          url: `/chat`
-        },
-        chatMessageEntity
-    );
+  chatClient.post(
+    {
+      url: `/chat`,
+    },
+    chatMessageEntity,
+  );
 
-export const getMessagesByConversationId = async (conversationId: string, userId: string) =>
-    chatClient.get<ChatMessageEntity[]>(
-        {
-          url: `/chat/messages/conversation/${conversationId}/${userId}`
-        }
-    );
-
+export const getMessagesByConversationId = async (
+  conversationId: string,
+  userId: string,
+) =>
+  chatClient.get<ChatMessageEntity[]>({
+    url: `/chat/messages/conversation/${conversationId}/${userId}`,
+  });
 
 export const getMessages = (userId: string) =>
-    chatClient.get<ChatMessageEntity[]>(
-        {
-          url: `/chat/messages/last/${userId}/0`
-        }
-    )
+  chatClient.get<ChatMessageEntity[]>({
+    url: `/chat/messages/last/${userId}/0`,
+  });

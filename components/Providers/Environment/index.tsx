@@ -1,24 +1,27 @@
-import { isPresent } from '@/utils/app/primitive'
+import { isPresent } from '@/utils/app/primitive';
 
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface Window {
-    env: any
+    env: any;
   }
 }
 
 export type Env = {
-  butleyApiHost: string | undefined
-}
-
-const activeEnvironment = {
-  butleyApiHost: process.env.REACT_APP_BUTLEY_API_HOST
+  butleyApiHost: string | undefined;
 };
 
-const _env: Env = typeof window !== 'undefined' && isPresent(window.env)
+const activeEnvironment = {
+  butleyApiHost: process.env.REACT_APP_BUTLEY_API_HOST,
+};
+
+const _env: Env =
+  typeof window !== 'undefined' && isPresent(window.env)
     ? {
-      butleyApiHost: window.env.REACT_APP_BUTLEY_API_HOST || activeEnvironment.butleyApiHost,
-    }
+        butleyApiHost:
+          window.env.REACT_APP_BUTLEY_API_HOST ||
+          activeEnvironment.butleyApiHost,
+      }
     : activeEnvironment;
 console.log('starting host: ' + _env['butleyApiHost']);
 

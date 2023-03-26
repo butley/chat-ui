@@ -1,4 +1,4 @@
-import {Message} from "@/types/index";
+import { Message } from '@/types/index';
 
 export interface UserEntity {
   id?: number;
@@ -23,13 +23,15 @@ export interface ChatMessageEntity {
   agentDateTime?: string;
 }
 
-function convertChatMessagesToMessages(entities: ChatMessageEntity[]): Message[] {
+function convertChatMessagesToMessages(
+  entities: ChatMessageEntity[],
+): Message[] {
   return entities.flatMap((entity) => {
     const messages: Message[] = [];
 
     if (entity.userContent) {
       messages.push({
-        role: "user",
+        role: 'user',
         content: entity.userContent,
         chatTransactionID: entity.chatTransactionId,
         timestamps: entity.userDateTime,
@@ -38,7 +40,7 @@ function convertChatMessagesToMessages(entities: ChatMessageEntity[]): Message[]
 
     if (entity.agentContent) {
       messages.push({
-        role: "assistant",
+        role: 'assistant',
         content: entity.agentContent,
         chatTransactionID: entity.chatTransactionId,
         timestamps: entity.agentDateTime,

@@ -1,4 +1,4 @@
-import {UserEntity} from "@/types/custom";
+import { UserEntity } from '@/types/custom';
 
 export interface OpenAIModel {
   id: string;

@@ -14,13 +14,13 @@ export default function Document(props: Props) {
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-title" content="Chatbot UI"></meta>
         <script
-            dangerouslySetInnerHTML={{
-              __html: `
+          dangerouslySetInnerHTML={{
+            __html: `
                 window.env = {
                   REACT_APP_BUTLEY_API_HOST: '${process.env.REACT_APP_BUTLEY_API_HOST}',
                 };
               `,
-            }}
+          }}
         />
       </Head>
       <body>
