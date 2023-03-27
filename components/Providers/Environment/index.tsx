@@ -26,8 +26,5 @@ const _env: Env =
 console.log('starting host: ' + _env['butleyApiHost']);
 
 export function env(key: keyof Env): string | undefined {
-  console.log('for key: ' + key, activeEnvironment);
-  console.log('window:' + window.env.REACT_APP_BUTLEY_API_HOST);
-  console.log(_env);
   return _env[key];
 }
