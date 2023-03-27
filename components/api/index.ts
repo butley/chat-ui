@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { env } from '@/components/Providers/Environment';
 import axiosRetry from 'axios-retry';
-import { ChatMessageEntity } from '@/types/custom';
+import { ChatMessageEntity, UserEntity } from '@/types/custom';
 import { Conversation } from '@/types';
 
 export type ChatHttpConfig = {
@@ -70,7 +70,17 @@ export const chatClient: HTTP = {
   },
 };
 
-// Create a new conversation
+
+export const createUser = async (user: UserEntity) =>
+    chatClient.post<UserEntity>({
+      url: '/users'
+    }, user);
+
+export const getUserByEmail = async (email: string) =>
+    chatClient.get<UserEntity>({
+      url: `/users/by-email/${email}`,
+    });
+
 export const createConversation = async (conversation: Conversation) =>
   chatClient.post<Conversation>(
     {
