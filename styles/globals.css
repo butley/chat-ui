@@ -35,3 +35,12 @@ html {
 pre:has(div.codeblock) {
   padding: 0;
 }
+
+.img-profile {
+  height: 2rem;
+  width: 2rem;
+}
+
+.rounded-circle {
+  border-radius: 50% !important;
+}
