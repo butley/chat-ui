@@ -88,7 +88,7 @@ export const CustomChat: FC<Props> = ({
     const fetchMessages = async (userId: string) => {
       try {
         const messages = await getMessages(userId);
-        console.log(messages);
+        //console.log('message', messages);
       } catch (error) {
         console.error('Error fetching messages:', error);
       }
@@ -110,7 +110,7 @@ export const CustomChat: FC<Props> = ({
   }, []);
 
   return (
-    <div className="overflow-none relative flex-1 bg-white dark:bg-[#343541]">
+      <div className="overflow-none relative flex-1 bg-white dark:bg-[#343541]">
       {modelError ? (
         <ErrorMessageDiv error={modelError} />
       ) : (
@@ -151,7 +151,7 @@ export const CustomChat: FC<Props> = ({
               </>
             ) : (
               <>
-                <div className="flex justify-center border border-b-neutral-300 bg-neutral-100 py-2 text-sm text-neutral-500 dark:border-none dark:bg-[#444654] dark:text-neutral-200">
+                <div className="flex top-20 justify-center border border-b-neutral-300 bg-neutral-100 py-2 text-sm text-neutral-500 dark:border-none dark:bg-[#444654] dark:text-neutral-200">
                   {t('Model')}: {conversation.model.name}
                 </div>
 
