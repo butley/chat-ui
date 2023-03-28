@@ -10,9 +10,8 @@ import {AdapterUser} from "next-auth/adapters";
 
 export const createUserIfNotExists = async (portalUser : PortalUser) => {
   try {
-    const user = await getUserByEmail(portalUser.email!!);
-    //console.log('User exists', user)
-    return user;
+    const response = await getUserByEmail(portalUser.email!!);
+    return response.data;
   } catch (error) {
     console.log('User does not exist', error)
     if (error.response && error.response.status === 404) {
@@ -24,8 +23,7 @@ export const createUserIfNotExists = async (portalUser : PortalUser) => {
         status: 'ACTIVE',
       };
       const createdUser = await createUser(newUser);
-      console.log('Created user', createdUser);
-      return createdUser;
+      return createdUser.data;
     } else {
       // Handle any other error cases here
       console.error("An error occurred:", error);
@@ -60,9 +58,9 @@ export default NextAuth({
         picture: user.image,
       };
 
-      await createUserIfNotExists(portalUser);
+      const backendUser = await createUserIfNotExists(portalUser);
+      portalUser.id = backendUser.id
       user.portalUser = portalUser;
-      console.log('user', user);
       return true
     },
     jwt: async ({ token, user }) => {
