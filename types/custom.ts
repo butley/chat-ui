@@ -23,7 +23,7 @@ export interface ChatMessageEntity {
   agentDateTime?: string;
 }
 
-export interface BillingCycle {
+export interface BillingCycleEntity {
   date?: string;
   created?: string;
   tokensTotal: number;

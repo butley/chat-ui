@@ -2,7 +2,7 @@
 import { useSession, signOut } from "next-auth/react";
 import {FC, useEffect, useState} from "react";
 import { UserCard } from "@/components/UserCard";
-import {BillingCycle, formatCurrency, formatDate, PortalUser} from "@/types/custom";
+import {BillingCycleEntity, formatCurrency, formatDate, PortalUser} from "@/types/custom";
 import { getOpenBillingCycle } from "@/components/api";
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 
 export const TopBar: FC<Props> = ({
 }) => {
-  const [billingCycle, setBillingCycle] = useState<BillingCycle>();
+  const [billingCycle, setBillingCycle] = useState<BillingCycleEntity>();
   const { data: session } = useSession();
   const portalUser: PortalUser = session?.user as PortalUser;
 

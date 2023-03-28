@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { env } from '@/components/Providers/Environment';
 import axiosRetry from 'axios-retry';
-import { BillingCycle, ChatMessageEntity, UserEntity } from '@/types/custom';
+import { BillingCycleEntity, ChatMessageEntity, UserEntity } from '@/types/custom';
 import { Conversation } from '@/types';
 
 export type ChatHttpConfig = {
@@ -116,7 +116,7 @@ export const getMessagesByConversationId = async (
   });
 
 export const getOpenBillingCycle = async (ownerId: number) => {
-  return chatClient.get<BillingCycle>({
+  return chatClient.get<BillingCycleEntity>({
     url: `/billing/cycle/${ownerId}`,
   });
 };
