@@ -16,7 +16,7 @@ export function UserCard({ user, onLogout }: { user: PortalUser; onLogout: () =>
       <div className="relative inline-block text-left flex items-center">
         <button
             onClick={toggleDropdown}
-            className="text-sm font-semibold focus:outline-none mr-2"
+            className="text-sm focus:outline-none mr-2"
         >
           {user.firstName}
         </button>
