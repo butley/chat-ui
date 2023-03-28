@@ -23,6 +23,13 @@ export interface ChatMessageEntity {
   agentDateTime?: string;
 }
 
+export interface BillingCycle {
+  date?: string;
+  created?: string;
+  tokensTotal: number;
+  rate: number;
+}
+
 export interface PortalUser {
   clientId?: string;
   clientSecret?: string;
@@ -61,5 +68,19 @@ function convertChatMessagesToMessages(
     }
 
     return messages;
+  });
+}
+
+export function formatDate(rawDate, locale = 'en-US', options = { year: 'numeric', month: 'long', day: 'numeric' }) {
+  const dateObj = new Date(rawDate[0], rawDate[1] - 1, rawDate[2]);
+  return dateObj.toLocaleDateString(locale, options);
+}
+
+export function formatCurrency(value: number): string {
+  return value.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   });
 }

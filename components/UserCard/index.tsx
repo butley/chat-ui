@@ -12,8 +12,6 @@ export function UserCard({ user, onLogout }: { user: PortalUser; onLogout: () =>
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
-
-  console.log('user: ', user);
   return (
       <div className="relative inline-block text-left flex items-center">
         <button
