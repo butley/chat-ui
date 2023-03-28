@@ -23,6 +23,19 @@ export interface ChatMessageEntity {
   agentDateTime?: string;
 }
 
+export interface PortalUser {
+  clientId?: string;
+  clientSecret?: string;
+  clientName?: string;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  emailVerified?: boolean;
+  idToken?: string;
+  picture?: string;
+  id?: number;
+}
+
 function convertChatMessagesToMessages(
   entities: ChatMessageEntity[],
 ): Message[] {
