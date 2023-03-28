@@ -18,12 +18,12 @@ export const TopBar: FC<Props> = ({
 
   return (
       <div className="fixed shadow-neutral-900 top-0 z-10 w-full h-12 bg-gray-600 text-white flex justify-end">
-        <button
-            onClick={handleLogout}
-            className="text-sm font-semibold focus:outline-none mr-2"
-        >
-          Logout
-        </button>
+        {/*<button*/}
+        {/*    onClick={handleLogout}*/}
+        {/*    className="text-sm font-semibold focus:outline-none mr-2"*/}
+        {/*>*/}
+        {/*  Logout*/}
+        {/*</button>*/}
         <UserCard user={session?.user as PortalUser} onLogout={handleLogout} />
       </div>
   );
