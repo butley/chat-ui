@@ -2,7 +2,7 @@
 import { useSession, signOut } from "next-auth/react";
 import {FC, useEffect, useState} from "react";
 import { UserCard } from "@/components/UserCard";
-import {BillingCycleEntity, formatCurrency, formatDate, PortalUser} from "@/types/custom";
+import { BillingCycleEntity, formatCurrency, formatDate, PortalUser } from "@/types/custom";
 import { getOpenBillingCycle } from "@/components/api";
 
 interface Props {
@@ -21,14 +21,20 @@ export const TopBar: FC<Props> = ({
   useEffect(() => {
     const fetchBillingCycle = async () => {
       try {
-        const response = await getOpenBillingCycle(portalUser?.id!!);
-        setBillingCycle(response.data);
+        return await getOpenBillingCycle(portalUser?.id!!);
       } catch (error) {
-        console.error('Error fetching messages:', error);
+        console.error('Error fetching billing cycle:', error);
       }
     }
-    fetchBillingCycle();
-  });
+
+    const intervalId = setInterval(() => {
+      fetchBillingCycle().then(r => setBillingCycle(r?.data));
+    }, 60000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [portalUser?.id]);
 
   return (
       <div className="fixed shadow-neutral-900 top-0 z-10 w-full h-12 bg-gray-600 text-white flex justify-end">
