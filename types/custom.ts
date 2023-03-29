@@ -19,7 +19,7 @@ export interface ChatMessageEntity {
   chatTransactionId?: number;
   conversationId: number;
   userUnread?: boolean;
-  agentContent: string;
+  agentContent?: string;
   agentDateTime?: string;
 }
 
@@ -54,7 +54,7 @@ function convertChatMessagesToMessages(
         role: 'user',
         content: entity.userContent,
         chatTransactionID: entity.chatTransactionId,
-        timestamps: entity.userDateTime,
+        timestamp: entity.userDateTime,
       });
     }
 
@@ -63,7 +63,7 @@ function convertChatMessagesToMessages(
         role: 'assistant',
         content: entity.agentContent,
         chatTransactionID: entity.chatTransactionId,
-        timestamps: entity.agentDateTime,
+        timestamp: entity.agentDateTime,
       });
     }
 

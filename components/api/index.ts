@@ -81,7 +81,7 @@ export const getUserByEmail = async (email: string) =>
       url: `/users/by-email/${email}`,
     });
 
-export const createConversation = async (conversation: Conversation) =>
+export const upsertConversation = async (conversation: Conversation) =>
   chatClient.post<Conversation>(
     {
       url: `/chat/conversation`,
@@ -89,12 +89,12 @@ export const createConversation = async (conversation: Conversation) =>
     conversation,
   );
 
-export const getConversations = async (userId: string) =>
+export const getConversations = async (userId: number) =>
   chatClient.get<Conversation[]>({
     url: `/chat/conversation/${userId}`,
   });
 
-export const deleteConversation = async (conversationId: string) =>
+export const deleteConversation = async (conversationId: number) =>
   chatClient.delete({
     url: `/chat/conversation/${conversationId}`,
   });
@@ -102,7 +102,7 @@ export const deleteConversation = async (conversationId: string) =>
 export const createMessage = async (chatMessageEntity: ChatMessageEntity) =>
   chatClient.post(
     {
-      url: `/chat`,
+      url: `/chat/messages`,
     },
     chatMessageEntity,
   );

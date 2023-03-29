@@ -25,7 +25,7 @@ export interface Message {
   role: Role;
   content: string;
   chatTransactionID?: number;
-  timestamps?: string;
+  timestamp?: string;
 }
 
 export type Role = 'assistant' | 'user';
