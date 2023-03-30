@@ -31,3 +31,23 @@
 html {
   background: #202123;
 }
+
+pre:has(div.codeblock) {
+  padding: 0;
+}
+
+.img-profile {
+  height: 2rem;
+  width: 2rem;
+}
+
+.rounded-circle {
+  border-radius: 50% !important;
+}
+
+.topbar-divider {
+  width: 0;
+  border-right: 1px solid #777778;
+  height: calc(4.375rem - 2rem);
+  margin: auto 1rem;
+}
