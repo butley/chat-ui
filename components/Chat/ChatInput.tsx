@@ -34,7 +34,8 @@ export const ChatInput: FC<Props> = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
-    const maxLength = model.id === OpenAIModelID.GPT_3_5 ? 12000 : 24000;
+    //const maxLength = model.id === OpenAIModelID.GPT_3_5 ? 12000 : 24000;
+    const maxLength = 12000;
 
     if (value.length > maxLength) {
       alert(

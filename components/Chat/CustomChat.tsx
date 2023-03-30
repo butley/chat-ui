@@ -85,19 +85,6 @@ export const CustomChat: FC<Props> = ({
   }, [conversation.messages, scrollToBottom]);
 
   useEffect(() => {
-    const fetchMessages = async (userId: string) => {
-      try {
-        const messages = await getMessages(userId);
-        //console.log('message', messages);
-      } catch (error) {
-        console.error('Error fetching messages:', error);
-      }
-    };
-
-    fetchMessages('2');
-  });
-
-  useEffect(() => {
     const chatContainer = chatContainerRef.current;
 
     if (chatContainer) {
@@ -116,62 +103,23 @@ export const CustomChat: FC<Props> = ({
       ) : (
         <>
           <div className="max-h-full overflow-scroll" ref={chatContainerRef}>
-            {conversation.messages.length === 0 ? (
-              <>
-                <div className="mx-auto flex w-[350px] flex-col space-y-10 pt-12 sm:w-[600px]">
-                  <div className="text-center text-4xl font-semibold text-gray-800 dark:text-gray-100">
-                    {models.length === 0 ? t('Loading...') : 'Chatbot UI'}
-                  </div>
-
-                  {models.length > 0 && (
-                    <div className="flex h-full flex-col space-y-4 rounded border border-neutral-500 p-4">
-                      <ModelSelect
-                        model={conversation.model}
-                        models={models}
-                        onModelChange={(model) =>
-                          onUpdateConversation(conversation, {
-                            key: 'model',
-                            value: model,
-                          })
-                        }
-                      />
-
-                      <SystemPrompt
-                        conversation={conversation}
-                        onChangePrompt={(prompt) =>
-                          onUpdateConversation(conversation, {
-                            key: 'prompt',
-                            value: prompt,
-                          })
-                        }
-                      />
-                    </div>
-                  )}
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="flex top-20 justify-center border border-b-neutral-300 bg-neutral-100 py-2 text-sm text-neutral-500 dark:border-none dark:bg-[#444654] dark:text-neutral-200">
-                  {t('Model')}: {conversation.model.name}
-                </div>
-
-                {conversation.messages.map((message, index) => (
-                  <ChatMessage
-                    key={index}
-                    message={message}
-                    messageIndex={index}
-                    onEditMessage={onEditMessage}
-                  />
-                ))}
-
-                {loading && <ChatLoader />}
-
-                <div
-                  className="h-[162px] bg-white dark:bg-[#343541]"
-                  ref={messagesEndRef}
+            <>
+              {conversation.messages.map((message, index) => (
+                <ChatMessage
+                  key={index}
+                  message={message}
+                  messageIndex={index}
+                  onEditMessage={onEditMessage}
                 />
-              </>
-            )}
+              ))}
+
+              {loading && <ChatLoader />}
+
+              <div
+                className="h-[162px] bg-white dark:bg-[#343541]"
+                ref={messagesEndRef}
+              />
+            </>
           </div>
 
           <ChatInput
