@@ -1,4 +1,4 @@
-import { Message } from '@/types/index';
+import {Conversation, Message} from '@/types/index';
 
 export interface UserEntity {
   id?: number;
@@ -17,7 +17,7 @@ export interface ChatMessageEntity {
   userDateTime?: string;
   user?: UserEntity;
   chatTransactionId?: number;
-  conversationId: number;
+  conversation: Conversation;
   userUnread?: boolean;
   agentContent?: string;
   agentDateTime?: string;
@@ -43,7 +43,7 @@ export interface PortalUser {
   id?: number;
 }
 
-function convertChatMessagesToMessages(
+export function convertChatMessagesToMessages(
   entities: ChatMessageEntity[],
 ): Message[] {
   return entities.flatMap((entity) => {
