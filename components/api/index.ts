@@ -108,8 +108,8 @@ export const createMessage = async (chatMessageEntity: ChatMessageEntity) =>
   );
 
 export const getMessagesByConversationId = async (
-  conversationId: string,
-  userId: string,
+  conversationId: number,
+  userId: number,
 ) =>
   chatClient.get<ChatMessageEntity[]>({
     url: `/chat/messages/conversation/${conversationId}/${userId}`,
@@ -121,7 +121,7 @@ export const getOpenBillingCycle = async (ownerId: number) => {
   });
 };
 
-export const getMessages = (userId: string) =>
+export const getMessages = (userId: number) =>
   chatClient.get<ChatMessageEntity[]>({
     url: `/chat/messages/last/${userId}/0`,
   });
