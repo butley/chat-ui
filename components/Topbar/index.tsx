@@ -18,18 +18,25 @@ export const TopBar: FC<Props> = ({
     await signOut()
   }
 
-  useEffect(() => {
-    const fetchBillingCycle = async () => {
-      try {
-        return await getOpenBillingCycle(portalUser?.id!!);
-      } catch (error) {
-        console.error('Error fetching billing cycle:', error);
-      }
+  const fetchBillingCycle = async () => {
+    try {
+      return await getOpenBillingCycle(portalUser?.id!!);
+    } catch (error) {
+      console.error('Error fetching billing cycle:', error);
     }
+  }
+
+  const updateBillingCycle = async () => {
+    fetchBillingCycle().then(r => setBillingCycle(r?.data));
+  }
+
+  useEffect(() => {
 
     const intervalId = setInterval(() => {
-      fetchBillingCycle().then(r => setBillingCycle(r?.data));
-    }, 60000);
+      updateBillingCycle();
+    }, 300000);
+
+    updateBillingCycle();
 
     return () => {
       clearInterval(intervalId);
@@ -38,10 +45,14 @@ export const TopBar: FC<Props> = ({
 
   return (
       <div className="fixed shadow-neutral-900 top-0 z-10 w-full h-12 bg-gray-600 text-white flex justify-end">
-        {billingCycle && (
+        {billingCycle ? (
             <div className="flex flex-col justify-center mr">
               <span className="text-sm">{formatCurrency(billingCycle.tokensTotal * billingCycle.rate)}</span>
               {billingCycle?.date ? formatDate(billingCycle.date) : 'Loading...'}
+            </div>
+        ) : (
+            <div className="flex flex-col justify-center mr">
+              <span className="text-sm">Billing Cycle Not Available</span>
             </div>
         )}
         <div className="topbar-divider d-none d-sm-block"></div>
@@ -51,7 +62,7 @@ export const TopBar: FC<Props> = ({
         {/*>*/}
         {/*  Logout*/}
         {/*</button>*/}
-        <UserCard user={session?.user as PortalUser} onLogout={handleLogout} />
+        <UserCard user={session?.user as PortalUser} onLogout={handleLogout}/>
       </div>
   );
 };
